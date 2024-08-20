@@ -1,0 +1,33 @@
+{
+  labels: ["dependencies"],
+  enabledManagers: [
+    "custom.regex",
+    "github-actions",
+  ],
+  customManagers: [
+    {
+      depNameTemplate: "Renovate",
+      fileMatch: ["^.github/workflows/renovate.yaml$"],
+      matchStrings: ["renovate-version: (?<currentValue>.*?)\\n"],
+      datasourceTemplate: "docker",
+      packageNameTemplate: "renovate/renovate",
+    },
+  ],
+  packageRules: [
+    {
+      description: "Disable grouping for all dependencies",
+      matchPackagePatterns: [".*"],
+      groupName: null,
+    },
+    {
+      description: "Label workflows",
+      matchManagers: ["github-actions"],
+      addLabels: ["workflows"],
+    },
+    {
+      description: "Label workflows",
+      matchPackageNames: ["renovate/renovate"],
+      addLabels: ["workflows"],
+    },
+  ],
+}
